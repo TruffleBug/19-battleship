@@ -16,6 +16,7 @@ class Ship {
     hit() {
         this.hitNum += 1;
         this.isSunk();
+        return this.hitNum;
     }
 
     isSunk() {
