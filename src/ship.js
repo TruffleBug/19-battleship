@@ -15,13 +15,14 @@ class Ship {
 
     hit() {
         this.hitNum += 1;
-        this.isSunk();
-        return this.hitNum;
+        if(this.isSunk == true) return 'You sunk my ship!';
+        return 'Hit!';
     }
 
     isSunk() {
         if(this.hitNum == this.length) {
             this.isSunk = true;
+            return true
         }
     }
 }
