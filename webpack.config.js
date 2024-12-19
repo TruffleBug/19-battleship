@@ -1,6 +1,9 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+// import path from "path"
+// import HtmlWebpackPlugin from "html-webpack-plugin"
+
 module.exports = {
     mode: 'development',
     entry: './src/index.js',
@@ -11,7 +14,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/template.html',
+            template: './src/battleship.html',
         }),
     ],
     module: {

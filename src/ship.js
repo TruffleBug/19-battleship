@@ -6,23 +6,25 @@
     // Patrol Boat (2)
 
 class Ship {
-    constructor(length, coord) {
+    constructor(length, coords) {
         this.length = length;
+        this.coords = coords;
         this.hitNum = 0;
-        this.isSunk = false;
-        this.coord = coord
+        this.sunk = false
     }
 
     hit() {
         this.hitNum += 1;
-        if(this.isSunk == true) return 'You sunk my ship!';
+        this.isSunk();
         return 'Hit!';
     }
 
     isSunk() {
         if(this.hitNum == this.length) {
-            this.isSunk = true;
-            return true
+            this.sunk = true;
+            return 'You sunk my ship!'
+        } else {
+            return
         }
     }
 }
