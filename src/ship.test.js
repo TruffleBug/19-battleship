@@ -3,7 +3,7 @@ const Ship = require('./ship.js')
 
 
 
-describe.skip('Ship class', () => {
+describe('Ship class', () => {
     let newShip;
 
     beforeEach(() => {

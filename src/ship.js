@@ -13,22 +13,19 @@ class Ship {
         this.sunk = false
     }
 
-    hit() {
-        this.hitNum += 1;
-        this.isSunk();
-        return 'Hit!';
+    hit(shipName) {
+        this.hitNum += 1; 
+        if (this.isSunk() == true) return console.log(`You sunk my ${shipName}!`);
+        return console.log('Hit!');
     }
 
     isSunk() {
         if(this.hitNum == this.length) {
             this.sunk = true;
-            return 'You sunk my ship!'
-        } else {
-            return
-        }
+            return true;
+        };
     }
-}
-
+};
 
 
 export { Ship }
