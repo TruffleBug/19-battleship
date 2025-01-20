@@ -17,6 +17,10 @@ module.exports = {
             template: './src/battleship.html',
         }),
     ],
+    devServer: {
+        watchFiles: ['./src/*.html'], // path to your html files
+        // other options
+      },
     module: {
         rules: [
             {

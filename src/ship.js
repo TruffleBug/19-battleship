@@ -8,7 +8,7 @@
 class Ship {
     constructor(length, coords) {
         this.length = length;
-        this.coords = coords;
+        this.coords = coords; // array of strings
         this.hitNum = 0;
         this.sunk = false
     }

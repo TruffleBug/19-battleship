@@ -69,5 +69,71 @@ document.body.appendChild(image) -->
 
 
 
-PLAYER.JS - Player class
-- Player object: { type (arg), gameboard = new Gameboard object }
+<!-- PLAYER.JS - Player class
+- Player object: { type (arg), playerName (arg) gameboard = new Gameboard object } -->
+
+
+
+INDEX.JS - game play
+<!-- - event listeners:
+    - startGame modal: 
+        - 'Start Game' button (onClick)
+            - close startGame modal
+            - show enterPlayerNames modal
+    - enterPlayerNames modal: 
+        - Cancel button (onClick)
+            - close enterPlayerNamesmodal 
+            - open startGame modal
+        - 'Let's Go!' button (onClick) 
+            - create new instance of Player for each player 
+            - close enterPlayerNames modal
+            - run playGame function -->
+
+<!-- ***- display(player) function:
+    - querySelect .gameGrid  -->
+
+- playGame function:
+    - run setShips(player1) function
+
+- setShips function (arg: player):
+    - playDirections div content:
+        <!-- - "Rotate Ship" button
+            - addEventListener (onClick): toggle dir = 'horiz' & 'vert' -->
+        - "click on gameboard to place your shipName"
+        - "shipName: length = length, direction = dir"
+    <!-- - let count = 0 -->
+    - set up event listener for gameboard cell (onClick each cell):
+        - run player.gameboard.placeShip(shipPieces[count][0], shipPieces[count][1], headCoord(onClick), dir) function
+        - count++
+        - run renderGameboard(player) function
+    - if (count > shipPieces.length && player == player1), run setShips(player2) function
+    - if (count > shipPieces.length && player == player2), clear playDirections div content & break
+
+<!-- - coodToArray(arg: coordInString)
+    - converts '(X,X)' or '[X,X]' to an array [X,X] -->
+
+<!-- - renderGameboard(currentPlayer) function:
+    - let otherPlayer = Player2
+    - if currentPlayer = Player2, otherPlayer = Player1
+
+    - let shipNames = list of all ships in myShips object (= Object.keys(currentPlayer.gameboard.myShips))
+    - for each ship in shipNames,
+        - my boat locations: gray background
+    - for each coord in attackedByOther array,
+        - their attacks (hit) = red background
+        - their attacks (miss) = limegreen background
+    - for each coord in other player's attackedByOther array,
+        - my attacks (hit): X
+        - my attacks (miss): O
+    - **USE EXISTING ISCOORDONPLACEDSHIP FUNCTION ON GAMEBOARD TO DETERMINE IF HIT -->
+
+----------------------------------------------------------------
+
+BATTLESHIP.HTML - UI display
+<!-- - startGame modal:
+    - 'Start Game' button -->
+
+<!-- - enterPlayerNames modal:
+    - form for Player1 & Player2 names
+    - cancel button
+    - 'Let's Go!' button -->

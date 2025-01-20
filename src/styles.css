@@ -1,3 +1,31 @@
-body {
-    background-color: rebeccapurple;
+.player1View {
+    display: grid;
+    grid-template-columns: 1fr;
+    border: 3px solid green;
+    margin-bottom: 50px;
+}
+
+.player2View {
+    display: grid;
+    grid-template-columns: 1fr;
+    border: 3px solid blue;
+}
+
+.gameGrid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+}
+
+.gameGrid div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    min-height: 50px;
+    background-color: skyblue;
+}
+
+.gameGrid div:hover {
+    opacity: 0.6;
 }

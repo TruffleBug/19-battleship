@@ -1,11 +1,11 @@
 {
     "name": "webpack-practice",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "battleship.html",
     "scripts": {
         "test": "jest --watch",
         "build": "webpack",
-        "dev": "webpack serve",
+        "dev": "webpack serve --hot",
         "deploy": "git subtree push --prefix dist origin gh-pages"
     },
     "keywords": [],
