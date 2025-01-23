@@ -1,8 +1,7 @@
 import { Ship } from "./ship.js"
 
 class Gameboard {
-    constructor(playerName) {
-        this.playerName = playerName;
+    constructor() {
         this.myShips = {};
         this.attackedByOther = []; // array of strings
     }
@@ -47,16 +46,20 @@ class Gameboard {
     }
 
     receiveAttack(coord) {
-        // CAN PROBABLY DELETE COORD CONDITIONALS BELOW WHEN UI IS MADE
-        if(coord[0] >= 1 && coord[0] <= 10 && coord[1] >= 0 && coord[1] <= 10 && !this.attackedByOther.includes(coord.join())) {
+        if(!this.attackedByOther.includes(coord.join())) {
             this.attackedByOther.push(coord.join());
 
             const attackedShip = this.isCoordOnPlacedShip(coord);
             if(attackedShip != false) {
                 this.myShips[attackedShip].hit(attackedShip);
+                alert(`You hit ${this.playerName}'s ${attackedShip}!`)
                 this.isGameOver();
-            };
-        } else {
+                return;
+            } else {
+                alert('Miss!');
+            }
+            return;
+        } else { 
             return console.log('You already attacked there!');
         };
     }

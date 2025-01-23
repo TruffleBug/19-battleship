@@ -23,9 +23,24 @@
     align-items: center;
     border: 1px solid black;
     min-height: 50px;
-    background-color: skyblue;
+    background-color: rgb(135, 206, 235);
 }
 
 .gameGrid div:hover {
     opacity: 0.6;
 }
+
+.switchPlayerModal[open]::backdrop {
+    animation: fadein 1.5s ease-in forwards;
+}
+  
+@keyframes fadein{
+    0%{
+      opacity: 0;
+    }
+    100%{
+      opacity: 1;
+      background-color: black;
+    }
+}
+
