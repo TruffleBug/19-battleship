@@ -1,5 +1,7 @@
 import './styles.css';
-import { Player } from './player.js';
+import { Player } from "./player";
+// import { playGame } from ".";
+// import { startGameButton, letsGoButton, cancelButton } from './eventListeners';
 
 const grayColor = 'rgb(211, 211, 211)';
 const redColor = 'rgb(255, 0, 0)';
@@ -15,73 +17,45 @@ const shipPieces = [
 ];
 
 const currentPlayerText = document.querySelector('.currentPlayerText');
-const playDirections = document.querySelector('.playDirections');
 const playDirectionsText = document.querySelector('.playDirectionsText');
 const playDirectionsButton = document.querySelector('.playDirectionsButton');
 const cells = document.querySelectorAll('.gameGrid div');
 const switchPlayerModal = document.querySelector('.switchPlayerModal');
 const switchPlayerModalText = document.querySelector('.switchPlayerModal p');
+const startGameModal = document.querySelector('.startGameModal');
+const startGameButton = document.querySelector('.startGameModal button');
+const enterPlayerNamesModal = document.querySelector('.enterPlayerNamesModal');
+const letsGoButton = document.querySelector('#letsGoButton');
+const cancelButton = document.querySelector('#cancelButton');
 
-// THIS WORKS--UNCOMMENTED FOR TESTING EFFICIENCY
-// window.onload = () => {
-//     document.querySelector('.startGameModal').showModal();
-// };
+let player1, player2, currentPlayer, otherPlayer;
+
+startGameButton.addEventListener('click', () => {
+    startGameModal.close();
+    enterPlayerNamesModal.showModal();
+});
+
+letsGoButton.addEventListener('click', () => {
+    player1 = new Player(document.querySelector('#player1Name').value);
+    player2 = new Player(document.querySelector('#player2Name').value);
+    currentPlayer = player1;
+    otherPlayer = player2;
+    enterPlayerNamesModal.close();
+    playGame();
+});
+
+cancelButton.addEventListener('click', () => {
+    enterPlayerNamesModal.close();
+    startGameModal.showModal();
+});
+
+window.onload = () => {
+    document.querySelector('.startGameModal').showModal();
+};
 
 function playGame() {
     renderGameboard(player1);
-    // BYPASS SETTING SHIPS EACH TIME FOR DEV
     setShips(player1);
-
-// --------------
-
-    // function setShips2() {
-    //     return new Promise((resolve) => {
-    //     resolve(setShips(player1))
-    //     });
-    // }
-    
-    // async function attack() {
-    //     const shipsSet = await setShips2();
-    //     console.log(shipsSet); // Output: "Data fetched!"
-    //     console.log('await test')
-    // }
-
-    // attack();
-
-
-
-// function setShips2() {
-    //     return new Promise((resolve) => {
-    //       resolve(setShips(player1))
-    //     });
-    // }
-      
-    // async function attack() {
-    //     const shipsSet = await setShips2();
-    //     console.log(shipsSet); // Output: "Data fetched!"
-    //     console.log('await test')
-    // }
-    
-    // attack();
-
-// ---------------
-    
-    // let currentPlayer = player1;
-    // let otherPlayer = player2;
-
-    // updatePlayDirTextForAttack(currentPlayer);
-    // let cellIdArray;
-
-    // cells.forEach(cell => {
-    //     cell.addEventListener('click', () => {
-    //         cellIdArray = coordToArray(cell.id);
-    //         console.log('currentPlayer', currentPlayer);
-
-    //         otherPlayer.gameboard.receiveAttack(cellIdArray);
-    //         switchPlayer(otherPlayer);
-    //         updatePlayDirTextForAttack(currentPlayer);
-    //     });
-    // });;
 };
 
 function renderGameboard(player) {
@@ -180,7 +154,7 @@ function setShips(player) {
             });
             
             setTimeout(() => {
-                switchPlayer(otherPlayer)
+                switchPlayer()
             }, 500);
 
             if(player == player1) {
@@ -192,11 +166,10 @@ function setShips(player) {
             };
         };
     };
-    // return true;
 };
 
-function switchPlayer(switchTo) {
-    switchPlayerModalText.textContent = `Switch to ${switchTo.playerName}`;
+function switchPlayer() {
+    switchPlayerModalText.textContent = `Switch to ${otherPlayer.playerName}`;
     switchPlayerModal.showModal();
 };
 
@@ -209,11 +182,10 @@ switchPlayerButton.addEventListener('click', () => {
         currentPlayer = player1;
         otherPlayer = player2;
     };
-    // if(currentPlayer == player1) currentPlayer = player2;
-    // else {currentPlayer = player1};
     console.log('Switching players... Player = ', currentPlayer.playerName)
     // playDirectionsText.textContent = '';
     switchPlayerModal.close();
+    updatePlayDirTextForAttack(currentPlayer);
     renderGameboard(currentPlayer);
 });
 
@@ -223,62 +195,24 @@ function coordToArray(coordInString) {
     return cellIdArray;
 };
 
-function attack(currentPlayer) {
-    // let currentPlayer = player1;
-    let otherPlayer = player2;
-    // let otherPlayer;
-    // if(currentPlayer == player1) otherPlayer = player2;
-    // else{ otherPlayer = player1 };
-    
-    updatePlayDirTextForAttack(currentPlayer);
+function attack(player) {   
+    updatePlayDirTextForAttack(player);
 
     let cellIdArray;
     cells.forEach(cell => {
         cell.addEventListener('click', () => {
-            console.log('currentPlayer: ', currentPlayer, ', otherPlayer: ', otherPlayer);
+            console.log('player: ', currentPlayer, ', \notherPlayer: ', otherPlayer);
             cellIdArray = coordToArray(cell.id);
             
-            otherPlayer.gameboard.receiveAttack(cellIdArray);
-            // renderGameboard(currentPlayer);
-            switchPlayer(otherPlayer);
-            updatePlayDirTextForAttack(currentPlayer);
+            otherPlayer.gameboard.receiveAttack(cellIdArray, currentPlayer, otherPlayer);
+            renderGameboard(currentPlayer);
+            switchPlayer();
         });
     });;
-}
-
-
-function updatePlayDirTextForAttack(player) {
-    playDirectionsText.textContent = `${player.playerName}, attack!`;
 };
 
-// ------------------------------------------
-
-const player1 = new Player('Lisa');
-const player2 = new Player('Clayton');
-let currentPlayer = player1;
-let otherPlayer = player2;
-// let count;
-
-// player1.gameboard.placeShip('destroyer', 3, [10,1], 'Vertical');
-// player1.gameboard.placeShip('patrol boat', 2, [8,5]);
-// player2.gameboard.placeShip('destroyer', 3, [6,8]);
-// player2.gameboard.placeShip('patrol boat', 2, [2,1], 'Vertical');
-
-// console.log('pre attack-player1 gameboard', player1.gameboard)
-// console.log('pre attack-player2 gameboard', player2.gameboard)
-
-// player1.gameboard.receiveAttack([3,3]);
-// player1.gameboard.receiveAttack([5,3]);
-// player1.gameboard.receiveAttack([3,3]); // should err
-// player1.gameboard.receiveAttack([8,5]); // should hit patrol boat
-// player1.gameboard.receiveAttack([9,5]); // should sink patrol boat
-// player1.gameboard.receiveAttack([10,1]); // should hit destroyer
-// player1.gameboard.receiveAttack([10,2]); // should hit destroyer
-// player1.gameboard.receiveAttack([10,3]); // should sink destroyer
-
-// player2.gameboard.receiveAttack([2,2]);
-// player2.gameboard.receiveAttack([5,5])
-
-playGame();
+function updatePlayDirTextForAttack(currentPlayer) {
+    playDirectionsText.textContent = `${currentPlayer.playerName}, attack!`;
+};
 
 export { playGame } 

@@ -26,7 +26,6 @@ class Gameboard {
 
     isCoordOnPlacedShip(coord) { // coord should be an array: [X,X]
         let shipNames = Object.keys(this.myShips);
-        // if(typeof coord == 'object') coord.join()
         for(const ship of shipNames) {
             if (this.myShips[ship].coords.includes(coord)) {
                 return ship;
@@ -39,21 +38,24 @@ class Gameboard {
         const shipTiles = this.isValidPlacement(length, headCoord, dir);
         if(shipTiles == false) {
             return false;
-            // return console.log(`You can\'t place ${shipName} there!`);
         } else {
             this.myShips[shipName] = new Ship(length, shipTiles);
         };
     }
 
-    receiveAttack(coord) {
+    receiveAttack(coord, currentPlayer, otherPlayer) {
         if(!this.attackedByOther.includes(coord.join())) {
             this.attackedByOther.push(coord.join());
 
-            const attackedShip = this.isCoordOnPlacedShip(coord);
+            const attackedShip = this.isCoordOnPlacedShip(coord.join());
             if(attackedShip != false) {
                 this.myShips[attackedShip].hit(attackedShip);
-                alert(`You hit ${this.playerName}'s ${attackedShip}!`)
-                this.isGameOver();
+                if(otherPlayer.gameboard.myShips[attackedShip].sunk == true) {
+                    alert(`You sunk ${otherPlayer.playerName}'s ${attackedShip}`);
+                } else {
+                    alert(`You hit ${otherPlayer.playerName}'s ${attackedShip}!`);
+                };
+                this.isGameOver(currentPlayer);
                 return;
             } else {
                 alert('Miss!');
@@ -64,14 +66,17 @@ class Gameboard {
         };
     }
 
-    isGameOver() {
+    isGameOver(currentPlayer) {
         let shipNames = Object.keys(this.myShips);
         for(const ship of shipNames) {
             if (this.myShips[ship].sunk == false) {
                 return false;
             };
         };
-        return console.log('Game over!');
+        setTimeout(() => {
+            alert(`Game over! ${currentPlayer.playerName} wins!`);
+            location.reload();   
+        }, 500);
     }
 };
 
