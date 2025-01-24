@@ -61,8 +61,8 @@ class Gameboard {
                 alert('Miss!');
             }
             return;
-        } else { 
-            return console.log('You already attacked there!');
+        } else { // already attacked there
+            return false;
         };
     }
 

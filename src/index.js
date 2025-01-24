@@ -18,7 +18,7 @@ const shipPieces = [
 
 const currentPlayerText = document.querySelector('.currentPlayerText');
 const playDirectionsText = document.querySelector('.playDirectionsText');
-const playDirectionsButton = document.querySelector('.playDirectionsButton');
+const rotateShipButtonDiv = document.querySelector('.rotateShipButtonDiv');
 const cells = document.querySelectorAll('.gameGrid div');
 const switchPlayerModal = document.querySelector('.switchPlayerModal');
 const switchPlayerModalText = document.querySelector('.switchPlayerModal p');
@@ -66,7 +66,7 @@ function renderGameboard(player) {
 
     cells.forEach(cell => {
         cell.style.backgroundColor = skyBlueColor;
-        cell.textContent = cell.id;
+        cell.textContent = '';
     });
 
     // my boat locations = gray background
@@ -112,7 +112,7 @@ function setShips(player) {
         updatePlayDirTextForSetShips();
         console.log(dir)
     });
-    playDirectionsButton.replaceChildren(rotateShipButton);
+    rotateShipButtonDiv.replaceChildren(rotateShipButton);
     
     // FIRST TEXT DIRECTIONS
     updatePlayDirTextForSetShips();
@@ -162,6 +162,7 @@ function setShips(player) {
                     setShips(player2);
                 }, 2000);
             } else {
+                rotateShipButtonDiv.removeChild(rotateShipButtonDiv.firstChild)
                 attack(player1);
             };
         };
@@ -204,9 +205,12 @@ function attack(player) {
             console.log('player: ', currentPlayer, ', \notherPlayer: ', otherPlayer);
             cellIdArray = coordToArray(cell.id);
             
-            otherPlayer.gameboard.receiveAttack(cellIdArray, currentPlayer, otherPlayer);
-            renderGameboard(currentPlayer);
-            switchPlayer();
+            if (otherPlayer.gameboard.receiveAttack(cellIdArray, currentPlayer, otherPlayer) == false) {
+                alert('You\'ve already attacked there!')
+            } else {
+                renderGameboard(currentPlayer);
+                switchPlayer();
+            }
         });
     });;
 };

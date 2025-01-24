@@ -64,7 +64,7 @@ document.body.appendChild(image) -->
         - else (if it's false)
             - alert 'Miss!'
         - return
-    - else (if it is), return console.log('You've already attacked there!')
+    - else (if it is--i.e. already attacked there), return false
 
 <!-- - isGameOver function
     - iterate through all myShips.isSunk, if any == false, return false
